@@ -1,0 +1,64 @@
+task_specification: |
+  Read carefully for each of the last question and think step by step before answering. You are given a string of words and you need to take the last letter of each words and concate them
+parser_prompt:
+  text: |
+    Extract the following response final answer, only alphabet from a-z only.
+    DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER!
+    Remove any block elements like <answer> or anything that wasn't the actual lower letter answer
+    Response:
+format_instruct:
+  json: |
+    Provide your output in the following valid text and JSON format pair:
+    Reason : ...
+    ```json
+    {
+        "answer": ...
+    }
+    ```
+  yaml: |
+    Provide your output in the following valid text and YAML format:
+    Reason: ...
+    ```yaml
+    answer: ...
+    ```
+  xml: |
+    Provide your output in the following valid text and XML format:
+    Reason: ...
+    ```xml
+    <root>
+      <answer>...</answer>
+    </root>
+    ```
+fewshots:
+  - question: 'Take the last letters of the words in "Elon Musk" and concatenate them.'
+    response:
+      reason: 'The last letter of "Elon" is "n". The last letter of "Musk" is "k". Concatenating them is "nk".'
+      answer: "nk"
+  - question: 'Take the last letters of the words in "Larry Page" and concatenate them.'
+    response:
+      reason: 'The last letter of "Larry" is "y". The last letter of "Page" is "e". Concatenating them is "ye".'
+      answer: "ye"
+  - question: 'Take the last letters of the words in "Sergey Brin" and concatenate them.'
+    response:
+      reason: 'The last letter of "Sergey" is "y". The last letter of "Brin" is "n". Concatenating them is "yn".'
+      answer: "yn"
+  - question: 'Take the last letters of the words in "Bill Gates" and concatenate them.'
+    response:
+      reason: 'The last letter of "Bill" is "l". The last letter of "Gates" is "s". Concatenating them is "ls".'
+      answer: "ls"
+  - question: 'Take the last letters of the words in "Jason Wei" and concatenate them.'
+    response:
+      reason: 'The last letter of "Jason" is "n". The last letter of "Wei" is "i". Concatenating them is "ni".'
+      answer: "ni"
+  - question: 'Take the last letters of the words in "François Chollet" and concatenate them.'
+    response:
+      reason: 'The last letter of "François" is "s". The last letter of "Chollet" is "t". Concatenating them is "st".'
+      answer: "st"
+  - question: 'Take the last letters of the words in "Yann LeCun" and concatenate them.'
+    response:
+      reason: 'The last letter of "Yann" is "n". The last letter of "LeCun" is "n". Concatenating them is "nn".'
+      answer: "nn"
+  - question: 'Take the last letters of the words in "Eliezer Yudkowsky" and concatenate them.'
+    response:
+      reason: 'The last letter of "Eliezer" is "r". The last letter of "Yudkowsky" is "y". Concatenating them is "ry".'
+      answer: "ry"

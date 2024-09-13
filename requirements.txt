@@ -1,0 +1,12 @@
+datasets
+tqdm
+colorama
+together
+anthropic
+openai
+jinja2
+numpy
+google-api-core
+google-cloud-aiplatform
+scikit-learn
+wandb

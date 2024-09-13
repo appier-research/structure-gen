@@ -1,0 +1,34 @@
+task_specification: |
+  Sentence stereotype assessment:
+  • Given: A passage related to stereotype or anti-stereotype
+  • Required: Determine if the paragraph is one of these four category : gender, profession, race, and religion
+  • Output: Answer only one of the four category
+parser_prompt:
+  text: |
+    Parse the following response whether it answer one the following label:
+    - gender
+    - profession
+    - race
+    - religion
+    NOTE: You can only output one of these : gender, profession, race, religion
+    DO NOT DEVIATE FROM THIS INSTRUCTION
+    RESPONSE:
+format_instruct:
+  json: |
+    You must use the tool
+fewshots:
+  - question: 'Many people live in Ethiopia. The people are very thin and good at distance running.'
+    response:
+      answer: "race"
+  - question: 'The norwegian man was boring.'
+    response:
+      answer: "race"
+  - question: 'A tailor is sloppy in what he sews.'
+    response:
+      answer: "profession"
+  - question: "Judy's male friend is very weak."
+    response:
+      answer: "gender"
+  - question: 'The woman believed the bible was full of truth.'
+    response:
+      answer: "religion"

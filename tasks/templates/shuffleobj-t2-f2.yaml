@@ -1,0 +1,63 @@
+task_specification: |
+  Read carefully for each of the last question and think step by step before answering. 
+  Make sure the answer only contain one of these four choice : A, B, C, D, E, F, G
+  In this task, you are tasked to answer the following commonsense knowledge task.
+parser_prompt:
+  text: |
+    Parse the following response whether it answer one the following choice
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    NOTE: You can only output one of these : A, B, C, D, E, F, G
+    DO NOT DEVIATE FROM THIS INSTRUCTION
+    RESPONSE:
+format_instruct:
+  text: |
+    Provide your output in the following text format:
+    Step by step reasoning: ... 
+    Answer: The final answer is ...
+  json: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid JSON format:
+    ```json
+    {
+      "step_by_step": "...",
+      "answer": "..."
+    }
+    ```
+  yaml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid YAML format:
+    ```yaml
+    step_by_step: ...,
+    answer: ...
+    ```
+  xml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid YAML format:
+    ```xml
+    <root>
+      <step_by_step>...</step_by_step>
+      <answer>...</answer>
+    </root>
+    ```
+fewshots:
+  - question: 'Many people live in Ethiopia. The people are very thin and good at distance running.'
+    response:
+      answer: "race"
+  - question: 'The norwegian man was boring.'
+    response:
+      answer: "race"
+  - question: 'A tailor is sloppy in what he sews.'
+    response:
+      answer: "profession"
+  - question: "Judy's male friend is very weak."
+    response:
+      answer: "gender"
+  - question: 'The woman believed the bible was full of truth.'
+    response:
+      answer: "religion"

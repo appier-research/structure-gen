@@ -1,0 +1,97 @@
+task_specification: |
+  You are a tool use expert LLM which has access to these tools
+  Available tools:
+  {tool list}
+  Now given each questions, output API-Request on which tools to use and their valid parameters
+parser_prompt:
+  text: |
+    Extract the following response final answer, the answer format should be a json object without code block and have 2 attributes:
+    1. function_name and the function the answer is calling
+    2. params which the function params is using and their key and value
+    For example API-request function looks like this:
+    [INPUT]
+    FunctionUsed(var1='1234', var2='{'fds': 'x', 'd': 0}')
+    [OUTPUT]
+    {"function_name": "FunctionUsed", "params": {"var1": "1234", "var2": "{\'fds\': \'x\', \'d\': 0}"}
+    NOTE: it must be json valid
+    If you cannnot find the answer which looks like the API-request function in the response return NULL and nothing else
+    DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL JSON!
+    [INPUT]
+format_instruct:
+  text: |
+    Generate an API request in the format of [ApiName(key1='value1', key2='value2', ...)] based on the previous dialogue context.
+    The current year is 2023.
+    Do not answer the user questions before giving a valid API-Request first
+    Your tool use response should be a format as follows:
+    API-Request:
+    [ApiName(key1='value1', key2='value2', ...)]
+  json: |
+    Generate an API request in the format of JSON based on the previous dialogue context.
+    The current year is 2023.
+    Do not answer the user questions before giving a valid API-Request first
+    Your tool use response should be a format as follows:
+    API-Request:
+    ```json
+    {
+        "api_name": "ApiName"
+        "params": {
+            "key1": "value1",
+            "key2": "value2"
+            ...
+        }
+    }
+    ```
+  yaml: |
+    Generate an API request in the format of YAML based on the previous dialogue context.
+    The current year is 2023.
+    Do not answer the user questions before giving a valid API-Request first
+    Your tool use response should be a format as follows:
+    API-Request:
+    ```yaml
+    api_name: "ApiName"
+    params:
+        key1: value1
+        key2: value2
+    ```
+    ```
+  xml: |
+    Generate an API request in the format of XML based on the previous dialogue context.
+    The current year is 2023.
+    Do not answer the user questions before giving a valid API-Request first
+    Your response should be a format as follows:
+    API-Request:
+    ```xml
+    <root>
+        <api_name>ApiName</api_name>
+        <params>
+            <key1>value1</key1>
+            <key2>value2</key2>
+            ...
+        </params>
+    </root>
+    ```
+fewshots:
+  - question: Recognized as a Leader in the Gartner Magic Quadrant for Data and Analytics Service Providers 2021.
+    response:
+      answer: Technology
+  - question: Recent report highlights a sharp increase in corporate boards prioritizing sustainability in their strategic goals.
+    response:
+      answer: Business and Management
+  - question: The Cybersecurity practice awarded Best Consulting Firm by SC Media Awards 2020.
+    response:
+      answer: Technology
+  - question: Survey reveals a growing trend of companies investing in leadership development programs to drive innovation.
+    response:
+      answer: Business and Management
+  - question: Tax team named as the Best Transfer Pricing Firm in Asia by International Tax Review 2022.
+    response:
+      answer: Tax and Accounting
+  - question: A new policy mandates stricter controls on data privacy and security for public sector organizations.
+    response:
+      answer: Government and Controls
+  - question: Honored with the Diversity Impact Award for its commitment to fostering an inclusive workplace culture.
+    response:
+      answer: Industry
+  - question: Named Leading Firm in Forensic Accounting by the Financial Forensics Association.
+    response:
+      answer: Tax and Accounting

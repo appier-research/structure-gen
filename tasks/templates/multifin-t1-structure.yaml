@@ -1,0 +1,49 @@
+task_specification: |
+    Act as a finance expert and assign the content based to the valid category
+    All possible valid category for you to choose from are as follows (one category per line, in the format of <category>):
+    * Finance
+    * Technology
+    * Tax and Accounting
+    * Business and Management
+    * Government and Controls
+    * Industry
+    Your answer MUST based on the above options, do not answer Insufficient information
+parser_prompt:
+  text: |
+    Extract the following RESPONSE final answer, your answer should be the one which match any of these valid category:
+    - Finance
+    - Technology
+    - Tax and Accounting
+    - Business and Management
+    - Government and Controls
+    - Industry
+    DO not output anything than the above valid category, just output one that match the answer, remove bracket "< >" symbol if exist
+    RESPONSE:
+format_instruct:
+  json: |
+    You must use the tool
+fewshots:
+  - question: Recognized as a Leader in the Gartner Magic Quadrant for Data and Analytics Service Providers 2021.
+    response:
+      answer: Technology
+  - question: Recent report highlights a sharp increase in corporate boards prioritizing sustainability in their strategic goals.
+    response:
+      answer: Business and Management
+  - question: The Cybersecurity practice awarded Best Consulting Firm by SC Media Awards 2020.
+    response:
+      answer: Technology
+  - question: Survey reveals a growing trend of companies investing in leadership development programs to drive innovation.
+    response:
+      answer: Business and Management
+  - question: Tax team named as the Best Transfer Pricing Firm in Asia by International Tax Review 2022.
+    response:
+      answer: Tax and Accounting
+  - question: A new policy mandates stricter controls on data privacy and security for public sector organizations.
+    response:
+      answer: Government and Controls
+  - question: Honored with the Diversity Impact Award for its commitment to fostering an inclusive workplace culture.
+    response:
+      answer: Industry
+  - question: Named Leading Firm in Forensic Accounting by the Financial Forensics Association.
+    response:
+      answer: Tax and Accounting

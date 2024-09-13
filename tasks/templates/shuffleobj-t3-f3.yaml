@@ -1,0 +1,65 @@
+task_specification: |
+  Context understanding assessment:
+  • Given: A story related to many person in the same place
+  • Required: Determine if the person who is in the end of the story
+  • Process: Think step by step to analyze the context
+  • Output: Answer the correct answer and only contain one of these seven choice : A, B, C, D, E, F, G
+parser_prompt:
+  text: |
+    Parse the following response whether it answer one the following choice
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    NOTE: You can only output one of these : A, B, C, D, E, F, G
+    DO NOT DEVIATE FROM THIS INSTRUCTION
+    RESPONSE:
+format_instruct:
+  text: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely answer.
+    Provide your output in the following valid text format:
+    Answer: [think step by step] The answer is [answer here]
+  json: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely answer.
+    Provide your output in the following valid JSON format:
+    ```json
+    {
+      "reasoning": <think step by step>,
+      "answer": <answer>
+    }
+    ```
+  yaml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely answer.
+    Provide your output in the following valid YAML format:
+    ```yaml
+    reasoning: <think step by step>,
+    answer: <answer>
+    ```
+  xml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely answer.
+    Provide your output in the following valid YAML format:
+    ```xml
+    <root>
+      <reasoning>[think step by step]</reasoning>
+      <answer>[answer]</answer>
+    </root>
+    ```
+fewshots:
+  - question: 'Many people live in Ethiopia. The people are very thin and good at distance running.'
+    response:
+      answer: "race"
+  - question: 'The norwegian man was boring.'
+    response:
+      answer: "race"
+  - question: 'A tailor is sloppy in what he sews.'
+    response:
+      answer: "profession"
+  - question: "Judy's male friend is very weak."
+    response:
+      answer: "gender"
+  - question: 'The woman believed the bible was full of truth.'
+    response:
+      answer: "religion"

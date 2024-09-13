@@ -1,0 +1,168 @@
+task_specification: |
+  Medical diagnosis task:
+  • Given: A patient profile
+  • Required: Diagnose the patient based on the provided information
+  • Process: Think step by step to analyze the patient's symptoms and history
+  • Output: Select one diagnosis from the provided list of valid options
+  Note: Carefully review the patient profile and the list of possible diagnoses before making your determination. Do not answer "Insufficient information" - you must choose from the given options.
+  Valid diagnoses (select one):
+  - Possible NSTEMI / STEMI
+  - Spontaneous rib fracture
+  - Pulmonary embolism
+  - Pulmonary neoplasm
+  - URTI
+  - Croup
+  - Sarcoidosis
+  - HIV (initial infection)
+  - Inguinal hernia
+  - Spontaneous pneumothorax
+  - Bronchospasm / acute asthma exacerbation
+  - Viral pharyngitis
+  - Bronchiolitis
+  - Pancreatic neoplasm
+  - Guillain-Barré syndrome
+  - Chagas
+  - Allergic sinusitis
+  - Acute rhinosinusitis
+  - PSVT
+  - Panic attack
+  - Epiglottitis
+  - Bronchiectasis
+  - Bronchitis
+  - Pericarditis
+  - Acute COPD exacerbation / infection
+  - Ebola
+  - Chronic rhinosinusitis
+  - Acute otitis media
+  - Larygospasm
+  - Influenza
+  - Stable angina
+  - Myasthenia gravis
+  - Myocarditis
+  - SLE
+  - GERD
+  - Anemia
+  - Cluster headache
+  - Localized edema
+  - Anaphylaxis
+  - Atrial fibrillation
+  - Acute pulmonary edema
+  - Acute laryngitis
+  - Acute dystonic reactions
+  - Boerhaave
+  - Pneumonia
+  - Tuberculosis
+  - Whooping cough
+  - Unstable angina
+  - Scombroid food poisoning
+parser_prompt:
+  text: |
+    Extract the following RESPONSE final answer, your answer should be the one which match any of these valid diagnoses:
+    - Possible NSTEMI / STEMI
+    - Spontaneous rib fracture
+    - Pulmonary embolism
+    - Pulmonary neoplasm
+    - URTI
+    - Croup
+    - Sarcoidosis
+    - HIV (initial infection)
+    - Inguinal hernia
+    - Spontaneous pneumothorax
+    - Bronchospasm / acute asthma exacerbation
+    - Viral pharyngitis
+    - Bronchiolitis
+    - Pancreatic neoplasm
+    - Guillain-Barré syndrome
+    - Chagas
+    - Allergic sinusitis
+    - Acute rhinosinusitis
+    - PSVT
+    - Panic attack
+    - Epiglottitis
+    - Bronchiectasis
+    - Bronchitis
+    - Pericarditis
+    - Acute COPD exacerbation / infection
+    - Ebola
+    - Chronic rhinosinusitis
+    - Acute otitis media
+    - Larygospasm
+    - Influenza
+    - Stable angina
+    - Myasthenia gravis
+    - Myocarditis
+    - SLE
+    - GERD
+    - Anemia
+    - Cluster headache
+    - Localized edema
+    - Anaphylaxis
+    - Atrial fibrillation
+    - Acute pulmonary edema
+    - Acute laryngitis
+    - Acute dystonic reactions
+    - Boerhaave
+    - Pneumonia
+    - Tuberculosis
+    - Whooping cough
+    - Unstable angina
+    - Scombroid food poisoning
+    RESPONSE:
+format_instruct:
+  text: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely diagnosis. Do not repl
+    Provide your output in the following valid text format:
+    Step by step reasoning: ...
+    Answer: ...
+  json: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely diagnosis.
+    Provide your output in the following valid JSON format:
+    ```json
+    {
+      "step_by_step_reasoning": "...",
+      "answer": "..."
+    }
+    ```
+  yaml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely diagnosis.
+    Provide your output in the following valid YAML format:
+    ```yaml
+    step_by_step_reasoning: ...,
+    answer: ...
+    ```
+  xml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely diagnosis.
+    Provide your output in the following valid YAML format:
+    ```xml
+    <root>
+      <step_by_step_reasoning>...</step_by_step_reasoning>
+      <answer>...</answer>
+    </root>
+    ```
+fewshots:
+  - question: |
+      patient profile: ""Sex: Female, Age: 53
+      - I have severe Chronic Obstructive Pulmonary Disease (COPD).
+      - I am experiencing shortness of breath or difficulty breathing in a significant way.
+      - I have had one or several flare ups of chronic obstructive pulmonary disease (COPD) in the past year.
+      - I have a cough that produces colored or more abundant sputum than usual.
+      - I smoke cigarettes.
+      - I have been diagnosed with gastroesophageal reflux.
+      - I work in agriculture.
+      - I have a cough.""
+    response:
+      reason: The patient's severe COPD, worsened respiratory symptoms, and history of smoking suggest an acute COPD exacerbation possibly complicated by pneumonia or bronchitis; pulmonary neoplasm and tuberculosis are also considerations due to risk factors and work environment.
+      answer: "Bronchitis"
+  - question: |
+      patient profile: ""Sex: Male, Age: 101
+      - I have severe Chronic Obstructive Pulmonary Disease (COPD).
+      - I am experiencing shortness of breath or difficulty breathing in a significant way.
+      - I have had one or several flare ups of chronic obstructive pulmonary disease (COPD) in the past year.
+      - I have a cough that produces colored or more abundant sputum than usual.
+      - I smoke cigarettes.
+      - I have a chronic obstructive pulmonary disease (COPD).
+      - I have a cough.
+      - I have noticed a wheezing sound when I exhale.""
+    response:
+      reason: The patient's symptoms of severe shortness of breath, increased sputum production, and wheezing suggest an acute COPD exacerbation possibly complicated by pneumonia or bronchitis, given his history of smoking and COPD; pulmonary neoplasm is also a concern due to long-term smoking; tuberculosis and bronchiectasis should be considered due to chronic cough and recurrent infections;
+      answer: "Acute COPD exacerbation / infection"

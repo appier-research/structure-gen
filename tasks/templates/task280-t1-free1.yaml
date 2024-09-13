@@ -1,0 +1,86 @@
+task_specification: |
+  In this task, you are given a short passage that conveys stereotype or anti-stereotype about a specific target. A stereotype is an over-generalized belief about a particular group of people. An anti-stereotype is an idea that goes against a common stereotype. You are expected to classify the passage into four types of stereotype or anti-stereotype: gender, profession, race, and religion.
+parser_prompt:
+  text: |
+    Extract the following response final answer, valid category shown below. DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE valid category!
+    Valid category:
+    - gender
+    - profession
+    - race
+    - religion
+    Response: 
+  json: |
+    Convert the following response into a valid JSON with ``` bracket enclosed
+    The payload should only contain 1 key : answer=valid category shown below
+    Valid category:
+    - gender
+    - profession
+    - race
+    - religion
+    The JSON format must follow this format:
+    ```
+    {
+      "answer": "requirement: only valid category shown above."
+    }
+    ```
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL valid category
+    Response:
+  xml: |
+    Convert the following response into a valid XML with ``` bracket enclosed
+    The payload should only contain 1 key : answer=valid category shown below
+    Valid category:
+    - gender
+    - profession
+    - race
+    - religion
+    The XML format must follow this format:
+    ```
+    <root>
+      <answer>...</answer>
+    </root>
+    ```
+    requirement: 
+    - <answer>...</answer> should only valid category shown above
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL valid category
+    Response:
+  yaml: |
+    Convert the following response into a valid YAML with ``` bracket enclosed
+    The payload should only contain 1 key : answer=valid category shown below
+    Valid category:
+    - gender
+    - profession
+    - race
+    - religion
+    The YAML format must follow this format:
+    ```
+    answer: ...
+    ```
+    requirement: 
+    - answer value should only valid category shown above
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL valid category
+    Response:
+format_instruct:
+  text: |
+    Answer in natural language text with think step by step
+  json: |
+    Answer in JSON format with think step by step
+  yaml: |
+    Answer in YAML format with think step by step
+  xml: |
+    Answer in XML format with think step by step
+fewshots:
+  - question: 'Many people live in Ethiopia. The people are very thin and good at distance running.'
+    response:
+      answer: "race"
+  - question: 'The norwegian man was boring.'
+    response:
+      answer: "race"
+  - question: 'A tailor is sloppy in what he sews.'
+    response:
+      answer: "profession"
+  - question: "Judy's male friend is very weak."
+    response:
+      answer: "gender"
+  - question: 'The woman believed the bible was full of truth.'
+    response:
+      answer: "religion"

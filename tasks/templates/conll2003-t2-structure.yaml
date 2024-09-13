@@ -1,0 +1,41 @@
+task_specification: |
+  You are a NER converter who extract the named entity from the given sentence after format Question: <sentence>.
+  Valid entity:
+  - PERSON : Used for the names of individuals, identifying people in the text.
+  - ORGANIZATION : Marks specific organizations, including companies, governmental bodies, and non-governmental organizations.
+  - LOCATION : Identifies geographical entities such as countries, cities, rivers, and mountains.
+  - MISC : Categorizes entities that don't clearly fall into the other standard types like organizations, persons, or locations. 
+  Your answered entity MUST based on the above options.
+parser_prompt:
+  text: |
+    Extract the answer into a 
+format_instruct:
+  json: |
+    You must use the tool to answer in json schema
+fewshots:
+  - question: |
+      patient profile: ""Sex: Female, Age: 53
+      - I have severe Chronic Obstructive Pulmonary Disease (COPD).
+      - I am experiencing shortness of breath or difficulty breathing in a significant way.
+      - I have had one or several flare ups of chronic obstructive pulmonary disease (COPD) in the past year.
+      - I have a cough that produces colored or more abundant sputum than usual.
+      - I smoke cigarettes.
+      - I have been diagnosed with gastroesophageal reflux.
+      - I work in agriculture.
+      - I have a cough.""
+    response:
+      reason: The patient's severe COPD, worsened respiratory symptoms, and history of smoking suggest an acute COPD exacerbation possibly complicated by pneumonia or bronchitis; pulmonary neoplasm and tuberculosis are also considerations due to risk factors and work environment.
+      answer: "Bronchitis"
+  - question: |
+      patient profile: ""Sex: Male, Age: 101
+      - I have severe Chronic Obstructive Pulmonary Disease (COPD).
+      - I am experiencing shortness of breath or difficulty breathing in a significant way.
+      - I have had one or several flare ups of chronic obstructive pulmonary disease (COPD) in the past year.
+      - I have a cough that produces colored or more abundant sputum than usual.
+      - I smoke cigarettes.
+      - I have a chronic obstructive pulmonary disease (COPD).
+      - I have a cough.
+      - I have noticed a wheezing sound when I exhale.""
+    response:
+      reason: The patient's symptoms of severe shortness of breath, increased sputum production, and wheezing suggest an acute COPD exacerbation possibly complicated by pneumonia or bronchitis, given his history of smoking and COPD; pulmonary neoplasm is also a concern due to long-term smoking; tuberculosis and bronchiectasis should be considered due to chronic cough and recurrent infections;
+      answer: "Acute COPD exacerbation / infection"

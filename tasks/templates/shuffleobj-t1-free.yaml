@@ -1,0 +1,96 @@
+task_specification: |
+  In this task, you are tasked to answer the following commonsense knowledge task.
+  Read carefully for each of the last question and think step by step before answering. 
+  Make sure the answer only contain one of these four choice : A, B, C, D, E, F, G
+parser_prompt:
+  text: |
+    Parse the following response whether it answer one the following choice
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    NOTE: You can only output one of these : A, B, C, D, E, F, G
+    DO NOT DEVIATE FROM THIS INSTRUCTION
+    RESPONSE:
+  json: |
+    Convert the following text response into a valid JSON with ``` bracket enclosed
+    The payload should only contain 2 keys : reason and answer
+    The JSON format must follow this format:
+    ```
+    {
+      "reason": "string: reasoning found in the response",
+      "answer": "final answer choice"
+    }
+    ```
+    RESPONSE Example:
+    Let's track the book swaps step-by-step:
+    1. **Eve and Alice swap:** Alice starts with Catch-22 and ends up with The Fellowship of the Ring. Eve starts with The Fellowship of the Ring and ends up with Catch-22.
+    2. **Alice and Claire swap:** Alice starts with The Fellowship of the Ring and ends up with Frankenstein. Claire starts with Frankenstein and ends up with The Fellowship of the Ring.
+    3. **Alice and Bob swap:** Alice starts with Frankenstein and ends up with Hound of the Baskervilles. Bob starts with Hound of the Baskervilles and ends up with Frankenstein.
+    4. **Dave and Alice swap:** Alice starts with Hound of the Baskervilles and ends up with The Pearl. Dave starts with The Pearl and ends up with Hound of the Baskervilles.
+    5. **Dave and Claire swap:** Dave starts with Hound of the Baskervilles and ends up with Frankenstein. Claire starts with The Fellowship of the Ring and ends up with Hound of the Baskervilles.
+    Therefore, at the end of the semester, Alice has **D) The Pearl**. 
+
+    Example Answer:
+    ```
+    {
+      "reason": "Eve and Alice swap, Alice and Claire swap, Alice and Bob swap, Dave and Alice swap, Dave and Claire swap. Therefore, at the end of the semester, Alice has D The Pearl",
+      "answer": "D"
+    }
+    ```
+
+    [Format restriction]
+    * In the answer SHOULD ONLY CONTAIN one choice letter : A, B, C, D, E, F, G
+    * Remove the answer choice text like ") Name", leave only ONE UPPER ALPHABET letter
+    * Do not make any JSON syntax mistake
+    Now answer this response
+    RESPONSE:
+format_instruct:
+  text: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid text format:
+    Answer: ...reasoning here... The answer is ...
+  json: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid JSON format:
+    ```json
+    {
+      "reasoning": "...",
+      "answer": "..."
+    }
+    ```
+  yaml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid YAML format:
+    ```yaml
+    reasoning: ...,
+    answer: ...
+    ```
+  xml: |
+    Now, take a deep breath and work on this problem step-by-step to derive the most likely choice.
+    Provide your output in the following valid YAML format:
+    ```xml
+    <root>
+      <reasoning>...</reasoning>
+      <answer>...</answer>
+    </root>
+    ```
+fewshots:
+  - question: 'Many people live in Ethiopia. The people are very thin and good at distance running.'
+    response:
+      answer: "race"
+  - question: 'The norwegian man was boring.'
+    response:
+      answer: "race"
+  - question: 'A tailor is sloppy in what he sews.'
+    response:
+      answer: "profession"
+  - question: "Judy's male friend is very weak."
+    response:
+      answer: "gender"
+  - question: 'The woman believed the bible was full of truth.'
+    response:
+      answer: "religion"

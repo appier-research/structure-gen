@@ -1,0 +1,45 @@
+task_specification: |
+  You are given a sentence and your task is to determine whether a sentence relating to sports is plausible or implausible. Read carefully for each of the last question and think step by step before answering. Answer yes if its plausible, no if implausible
+parser_prompt:
+  text: |
+    Parse the following response whether it answer yes/no
+    yes if its plausible, no if implausible
+    NOTE: You can only output yes or no string, DO NOT DEVIATE FROM THIS INSTRUCTION
+    ONLY yes / no
+    RESPONSE:
+format_instruct:
+  json: |
+    You must use tool
+fewshots:
+  - question: 'Is the following sentence plausible? “Kyle Palmieri was called for slashing.”'
+    response:
+      reason: 'Kyle Palmieri is a hockey player. Being called for slashing is part of hockey.'
+      answer: "yes"
+  - question: 'Is the following sentence plausible? “Joao Moutinho caught the screen pass in the NFC championship.”'
+    response:
+      reason: 'Joao Moutinho is a soccer player. The NFC championship is part of American football, not soccer. '
+      answer: "no"
+  - question: 'Is the following sentence plausible? “Carson Wentz set the pick and roll.”'
+    response:
+      reason: 'Carson Wentz is an American football player. Pick and roll is part of basketball, not football. '
+      answer: "no"
+  - question: 'Is the following sentence plausible? “Jonas Valanciunas beat the buzzer.”'
+    response:
+      reason: 'Jonas Valanciunas is a basketball player. Beating the buzzer is part of basketball.'
+      answer: "yes"
+  - question: 'Is the following sentence plausible? “Jamel Murray was perfect from the line."'
+    response:
+      reason: 'Jamal Murray is a basketball player. Being perfect from the line is part of basketball. '
+      answer: "yes"
+  - question: 'Is the following sentence plausible? “Sam Darnold passed the puck.”'
+    response:
+      reason: 'Sam Darnold is a American football player. Passing the puck is part of hockey, not American football. '
+      answer: "no"
+  - question: 'Is the following sentence plausible? “Draymond Green threw a touchdown.”'
+    response:
+      reason: 'Draymond Green is an basketball player. Throwing a touchdown is part of football, not basketball. '
+      answer: "no"
+  - question: 'Is the following sentence plausible? “Malcolm Brogdon banked the shot in.”'
+    response:
+      reason: 'Malcolm Brogdon is a basketball player. Banking the shot in is part of basketball.'
+      answer: "yes"

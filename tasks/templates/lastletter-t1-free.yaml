@@ -1,0 +1,90 @@
+task_specification: |
+  You are given a string of words and you need to take the last letter of each words and concate them.
+  Read the last question carefully and think step by step before answering. 
+parser_prompt:
+  text: |
+    Extract the following response final answer, only contain lowered case alphabet with no symbol no comma or full stop, only the numeric value. DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER!
+    Response: 
+  json: |
+    Convert the following response into a valid JSON with ``` bracket enclosed
+    The payload should only contain 2 keys : reason, answer
+    The JSON format must follow this format:
+    ```
+    {
+      "reason": "requirement: valid JSON string here, make sure to escape everything",
+      "answer": "requirement: only contain lowered case alphabet with no symbol no comma or full stop, only the numeric value."
+    }
+    ```
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER ALPHABET
+    Response:
+  xml: |
+    Convert the following response into a valid XML with ``` bracket enclosed
+    The payload should only contain 2 keys : reason, answer
+    The XML format must follow this format:
+    ```
+    <root>
+      <reason>...</reason>
+      <answer>...</answer>
+    </root>
+    ```
+    requirement: 
+    - valid XML string in <reason> </reason> block, make sure to escape everything
+    - <answer>...</answer> should only contain lowered case alphabet with no symbol no comma or full stop
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER ALPHABET
+    Response:
+  yaml: |
+    Convert the following response into a valid YAML with ``` bracket enclosed
+    The payload should only contain 2 keys : reason, answer
+    The YAML format must follow this format:
+    ```
+    reason: |
+      ...
+    answer: ...
+    ```
+    requirement: 
+    - valid YAML string in reason block, make sure to escape everything that break YAML format, becareful of tab
+    - answer value should only contain lowered case alphabet with no symbol no comma or full stop
+    Note: In the answer field DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER ALPHABET
+    Response:
+format_instruct:
+  text: |
+    Answer in natural language text with think step by step
+  json: |
+    Answer in JSON format with think step by step
+  yaml: |
+    Answer in YAML format with think step by step
+  xml: |
+    Answer in XML format with think step by step
+fewshots:
+  - question: 'Take the last letters of the words in "Elon Musk" and concatenate them.'
+    response:
+      reason: 'The last letter of "Elon" is "n". The last letter of "Musk" is "k". Concatenating them is "nk".'
+      answer: "nk"
+  - question: 'Take the last letters of the words in "Larry Page" and concatenate them.'
+    response:
+      reason: 'The last letter of "Larry" is "y". The last letter of "Page" is "e". Concatenating them is "ye".'
+      answer: "ye"
+  - question: 'Take the last letters of the words in "Sergey Brin" and concatenate them.'
+    response:
+      reason: 'The last letter of "Sergey" is "y". The last letter of "Brin" is "n". Concatenating them is "yn".'
+      answer: "yn"
+  - question: 'Take the last letters of the words in "Bill Gates" and concatenate them.'
+    response:
+      reason: 'The last letter of "Bill" is "l". The last letter of "Gates" is "s". Concatenating them is "ls".'
+      answer: "ls"
+  - question: 'Take the last letters of the words in "Jason Wei" and concatenate them.'
+    response:
+      reason: 'The last letter of "Jason" is "n". The last letter of "Wei" is "i". Concatenating them is "ni".'
+      answer: "ni"
+  - question: 'Take the last letters of the words in "François Chollet" and concatenate them.'
+    response:
+      reason: 'The last letter of "François" is "s". The last letter of "Chollet" is "t". Concatenating them is "st".'
+      answer: "st"
+  - question: 'Take the last letters of the words in "Yann LeCun" and concatenate them.'
+    response:
+      reason: 'The last letter of "Yann" is "n". The last letter of "LeCun" is "n". Concatenating them is "nn".'
+      answer: "nn"
+  - question: 'Take the last letters of the words in "Eliezer Yudkowsky" and concatenate them.'
+    response:
+      reason: 'The last letter of "Eliezer" is "r". The last letter of "Yudkowsky" is "y". Concatenating them is "ry".'
+      answer: "ry"
