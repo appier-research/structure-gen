@@ -66,7 +66,6 @@ def get_llm(model_name: str, series: str = None):
 
 
 
-
 def load_data_by_name(task):
     from datasets import load_dataset, Dataset
 
@@ -114,7 +113,7 @@ def load_data_by_name(task):
     elif task == 'shuffleobj':
         data = []
         choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-        for row in load_dataset('tasksource/bigbench', 'tracking_shuffled_objects', split='validation'):
+        for row in load_dataset('tasksource/bigbench', 'tracking_shuffled_objects', split='validation', trust_remote_code=True):
             row = dict(row)
             answer_choice = '\n'.join([ '{}) {}'.format(l, t) for l, t in zip(choices, row['multiple_choice_targets'])])
             row['question'] = row['inputs']+'\n'+answer_choice
@@ -124,7 +123,7 @@ def load_data_by_name(task):
     elif task == 'dateunder':
         data = []
         choices = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-        for row in load_dataset('tasksource/bigbench', 'date_understanding', split='validation'):
+        for row in load_dataset('tasksource/bigbench', 'date_understanding', split='validation', trust_remote_code=True):
             row = dict(row)
             answer_choice = '\n'.join([ '{}) {}'.format(l, t) for l, t in zip(choices, row['multiple_choice_targets'])])
             row['question'] = row['inputs']+'\n'+answer_choice
@@ -189,7 +188,8 @@ def load_prompting_fn(task, prompt_style):
             TextPrompter,
             YAMLPrompter,
             StructJSONPrompter,
-            OAIStructPrompter
+            OAIStructPrompter,
+            TwoStageLLM
         )
         formatter = {
             'json': JSONPrompter,
@@ -197,7 +197,8 @@ def load_prompting_fn(task, prompt_style):
             'xml': XMLPrompter,
             'text': TextPrompter,
             'struct': StructJSONPrompter,
-            'struct-v2': OAIStructPrompter
+            'struct-v2': OAIStructPrompter,
+            '2stage': TwoStageLLM,
         }
     if task == 'math':
         from tasks.math import TextPrompter, YAMLPrompter, XMLPrompter, JSONPrompter
@@ -217,13 +218,14 @@ def load_prompting_fn(task, prompt_style):
             'struct': StructJSONPrompter
         }
     elif task == 'ddxplus':
-        from tasks.ddxplus import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter
+        from tasks.ddxplus import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter, TwoStageLLM
         formatter = {
             'json': JSONPrompter,
             'xml': XMLPrompter,
             'yaml': YAMLPrompter,
             'text': TextPrompter,
-            'struct': StructJSONPrompter
+            'struct': StructJSONPrompter,
+            '2stage': TwoStageLLM
         }
     elif task == 'multifin':
         from tasks.multifin import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter
@@ -266,14 +268,15 @@ def load_prompting_fn(task, prompt_style):
             'struct': StructJSONPrompter
         }
     elif task == 'lastletter':
-        from tasks.lastletter import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter, OAIStructPrompter
+        from tasks.lastletter import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter, OAIStructPrompter, TwoStageLLM
         formatter = {
             'json': JSONPrompter,
             'xml': XMLPrompter,
             'yaml': YAMLPrompter,
             'text': TextPrompter,
             'struct': StructJSONPrompter,
-            'struct-v2': OAIStructPrompter
+            'struct-v2': OAIStructPrompter,
+            '2stage': TwoStageLLM,
         }
     elif task == 'sports':
         from tasks.sports import JSONPrompter, XMLPrompter, TextPrompter, YAMLPrompter, StructJSONPrompter

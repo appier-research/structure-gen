@@ -100,7 +100,7 @@ class TextPrompter(BaseTextPrompter):
         super().__init__(template_src, num_shots)
         self.parser_prompt = self.config['parser_prompt']['text']
         self.parser = LLMParser(self.parser_prompt,
-                                method='claude',
+                                method='openai',
                                 model_name='claude-3-haiku-20240307'
                             )
 
@@ -130,6 +130,89 @@ class TextPrompter(BaseTextPrompter):
             'parser_rule': parser_rule,
             'parsed_result': predict
         }
+
+class TwoStageLLM(BaseTextPrompter):
+    """
+    Run the following sglang service first
+    $ docker run --gpus "device=0" \
+        --shm-size 32g \
+        -p 30003:30003 \
+         -v /srv/home/ray-tam/hf_cache:/root/.cache/huggingface \
+         --env "HF_TOKEN=XXX" \
+        --ipc=host \
+        lmsysorg/sglang:latest \
+        python3 -m sglang.launch_server --model-path osmosis-ai/Osmosis-Structure-0.6B --host 0.0.0.0 --port 30003
+    """    
+    def __init__(self, num_shots=8, template_src='tasks/templates/ddxplus.yaml') -> None:
+        super().__init__(template_src, num_shots)
+        from openai import OpenAI
+
+        self.parser_prompt = self.config['parser_prompt']['text']
+        api_key = "osmosis"
+        api_base_url = "http://0.0.0.0:30003/v1"
+        self.parser = OpenAI(
+            api_key=api_key,
+            base_url=api_base_url,
+        )
+
+    def parse_answer(self, response, row):
+        """
+        Extract the following response final answer, only number with no symbol no comma or full stop, only the numeric value. DO NOT OUTPUT ANYTHING ELSE OTHER THAN THE FINAL ANSWER NUMBER!
+        Response: 
+        <response>
+        Answer:
+        """
+        json_schema = json.dumps(
+            {
+                "type": "object",
+                "properties": {
+                    # "reasoning": {"type": "string"},
+                    "answer": {
+                        "type": "string",
+                        "enum": ["Possible NSTEMI / STEMI", "Spontaneous rib fracture","Pulmonary embolism","Pulmonary neoplasm","URTI","Croup","Sarcoidosis","HIV (initial infection)","Inguinal hernia","Spontaneous pneumothorax","Bronchospasm / acute asthma exacerbation","Viral pharyngitis","Bronchiolitis","Pancreatic neoplasm","Guillain-Barré syndrome","Chagas","Allergic sinusitis","Acute rhinosinusitis","PSVT","Panic attack","Epiglottitis","Bronchiectasis","Bronchitis","Pericarditis","Acute COPD exacerbation / infection","Ebola","Chronic rhinosinusitis","Acute otitis media","Larygospasm","Influenza","Stable angina","Myasthenia gravis","Myocarditis","SLE","GERD","Anemia","Cluster headache","Localized edema","Anaphylaxis","Atrial fibrillation","Acute pulmonary edema","Acute laryngitis","Acute dystonic reactions","Boerhaave","Pneumonia","Tuberculosis","Whooping cough","Unstable angina","Scombroid food poisonin"],
+                        "description": "patient most diagnosis"
+                    }
+                },
+                # "required": ["reasoning", "answer"]
+                "required": ["answer"]
+            }
+        )
+        response = self.parser.chat.completions.create(
+            model="Osmosis/Osmosis-Structure-0.6B",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f"You are a helpful assistant that understands and translates text to JSON format according to the following schema. {json_schema}"
+                },
+                {
+                    "role": "user", 
+                    "content": response,
+                },
+            ],
+            temperature=0.6,
+            max_tokens=1024,
+            response_format={
+                "type": "json_schema",
+                "json_schema": {"name": "reasoning_extraction", "schema": json.loads(json_schema)},
+            },
+        )
+        try:
+            parsed_results = json.loads(response.choices[0].message.content)
+        except json.decoder.JSONDecodeError as e:
+            parsed_results = {
+                'answer': 'decode_error'
+            }
+
+        predict = parsed_results['answer']
+        answer = row['answer'].split('####')[-1].strip()
+        correct = predict == answer
+        return {
+            'correct': correct,
+            'answer': answer,
+            'predict': predict,
+            'parsed_result': parsed_results
+        }
+
 
 
 class StructJSONPrompter(BaseJSONPrompter):
